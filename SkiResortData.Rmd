@@ -1,0 +1,87 @@
+---
+title: "Ski Resort Data"
+author: "Eric Friesth"
+date: "10/1/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+
+#Load in inition dataset "OnTheSnow.csv"
+
+data = read.csv("OnTheSnow.csv")
+colnames(data)[colnames(data)=="ï..Name"] = "Name"
+
+# Subset the data just including ski resorts in Colorado
+
+df = subset(df, state == "Colorado")
+df
+
+
+```
+
+```{r}
+
+library(ggplot2)
+
+df1 = subset(df, df$Name != "Silverton Mountain")
+
+ggplot(df1, aes(x=Name, y=Runs, color = Skiable.Terrain, size = 5)) + geom_point() + theme(axis.text.x = element_text(angle = 90, hjust=1)) + labs(title = "Ski Resorts by Number of Runs with a focus on the Skiable Terrain", x = "Ski Resort", y = "Number of Runs")
+
+```
+
+```{r}
+
+ggplot(df1, aes(x=Skiable.Terrain, y=Runs, color = Name)) + geom_point()
+
+```
+
+```{r}
+
+ggplot(df1, aes(x = Name, y = Skiable.Terrain, size = Runs)) + geom_point() + labs(title = "") + theme(axis.text.x = element_text(angle = 90, hjust=1))
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
