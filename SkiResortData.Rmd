@@ -18,7 +18,7 @@ colnames(data)[colnames(data)=="ï..Name"] = "Name"
 
 # Subset the data just including ski resorts in Colorado
 
-df = subset(df, state == "Colorado")
+df = subset(data, state == "Colorado")
 df
 
 
@@ -30,23 +30,13 @@ library(ggplot2)
 
 df1 = subset(df, df$Name != "Silverton Mountain")
 
-ggplot(df1, aes(x=Name, y=Runs, color = Skiable.Terrain, size = 5)) + geom_point() + theme(axis.text.x = element_text(angle = 90, hjust=1)) + labs(title = "Ski Resorts by Number of Runs with a focus on the Skiable Terrain", x = "Ski Resort", y = "Number of Runs")
-
 ```
 
 ```{r}
 
-ggplot(df1, aes(x=Skiable.Terrain, y=Runs, color = Name)) + geom_point()
+ggplot(df1, aes(x = reorder(Name, Runs), y = Runs, size = Skiable.Terrain, color = 'blue')) + geom_point(aes(position = "jitter")) + geom_smooth(method = "lm", se = F) + theme(axis.text.x = element_text(angle = 90, hjust = 1))
 
 ```
-
-```{r}
-
-ggplot(df1, aes(x = Name, y = Skiable.Terrain, size = Runs)) + geom_point() + labs(title = "") + theme(axis.text.x = element_text(angle = 90, hjust=1))
-
-```
-
-
 
 
 
