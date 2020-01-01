@@ -1,0 +1,66 @@
+---
+title: "2016_election"
+author: "Eric Friesth"
+date: "1/1/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## U.S. 2016 Election
+#### Eric Friesth
+
+```{r, echo=FALSE}
+
+library(dplyr)
+
+results = read.csv('primary_results.csv')
+demo = read.csv('county_facts.csv')
+
+demo %<>% 
+  filter(state_abbreviation %in% c("IA", "NV", "SC")) %>% 
+  select(state_abbreviation = state_abbreviation, county = area_name, income = INC110213, hispanic = RHI725214, white= RHI825214, college = EDU685213, density = POP060210) %>% 
+  mutate(county = gsub(" County", "", county))
+
+votes = inner_join(results, demo, by = c("state_abbreviation", "county"))
+
+head(votes)
+str(votes)
+
+votes = na.omit(votes)
+
+str(votes)
+
+```
+
+```{r, echo=FALSE}
+
+library(ggplot2)
+
+ggplot(votes, aes(x = candidate, y = college)) + geom_bar(stat = "identity") + theme(axis.text.x = element_text(angle = 90, hjust = 1)) 
+
+
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
