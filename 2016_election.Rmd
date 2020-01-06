@@ -11,10 +11,19 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## U.S. 2016 Election
 #### Eric Friesth
+#### Data: https://www.kaggle.com/benhamner/2016-us-election
+
 
 ```{r, echo=FALSE}
 
 library(dplyr)
+library(ggplot2)
+library(plotly)
+library(grid)
+library(gridExtra)
+library(DT)
+library(GGally)
+library(randomForest)
 
 results = read.csv('primary_results.csv')
 demo = read.csv('county_facts.csv')
@@ -24,22 +33,22 @@ demo %<>%
   select(state_abbreviation = state_abbreviation, county = area_name, income = INC110213, hispanic = RHI725214, white= RHI825214, college = EDU685213, density = POP060210) %>% 
   mutate(county = gsub(" County", "", county))
 
-votes = inner_join(results, demo, by = c("state_abbreviation", "county"))
+elect = inner_join(results, demo, by = c("state_abbreviation", "county"))
 
-head(votes)
-str(votes)
+head(elect)
+str(elect)
 
-votes = na.omit(votes)
+elect = na.omit(elect)
 
-str(votes)
+str(elect)
 
 ```
 
 ```{r, echo=FALSE}
 
-library(ggplot2)
+#ggplot(votes, aes(x = candidate, y = college)) + geom_bar(stat = "identity") + theme(axis.text.x = element_text(angle = 90, hjust = 1)) 
 
-ggplot(votes, aes(x = candidate, y = college)) + geom_bar(stat = "identity") + theme(axis.text.x = element_text(angle = 90, hjust = 1)) 
+ggplotly(qplot(x =  income, y = college, data = elect, color = candidate, size = votes)) 
 
 
 
